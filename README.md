@@ -1,6 +1,6 @@
 # ArrayForth Mode
 
-This is a simple Emacs mode for editing arrayForth and colorForth files. This lets you use normal Forth syntax while presenting a colorForth style colored output. The output essentially follows the conventions outlined in this [1] post. You can run the file through some automated script to get actual array/colorForth output.
+This is a simple Emacs mode for editing arrayForth and colorForth files. This lets you use normal Forth syntax while presenting a colorForth style colored output. The output essentially follows the conventions outlined in this[1] post. You can run the file through some automated script to get actual array/colorForth output.
 
 [1]: http://www.strangegizmo.com/forth/ColorForth/msg00209.html
 
