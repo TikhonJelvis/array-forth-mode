@@ -33,11 +33,6 @@
 ;;; Code:
 
 ;; TODO: Add customization options!
-
-(defvar array-forth-mode-map            ;TODO: keybindings!
-  (let ((map (make-sparse-keymap))) map)
-  "Keymap for `array-forth-mode'.")
-
 (defvar array-forth-mode-syntax-table (make-syntax-table)
   "Syntax table for `array-forth-mode'.")
 
@@ -61,9 +56,22 @@
   "The face corresponding to colorForth's white color which
   denotes comments."
   :group 'array-forth-faces)
+(defface array-forth-blue-face '((t (:foreground "#77AAFF")))
+  "the face corresponding to colorForth's blue color which
+  denotes words that only affect displaying code."
+  :group 'array-forth-faces)
 
 (defvar array-forth-font-lock-keywords '()
   "The syntax highlighting for arrayForth.")
+
+(defun array-forth-electric-semicolon ()
+  "Inserts a semi-colon and, if appropriate, a blue cr word."
+  (interactive)
+  (save-excursion)
+  (let ((start (point)))
+    (insert "; |cr")
+    (compose-region start (+ start 3) "")
+    (put-text-property start (point) 'font-lock-face 'array-forth-blue-face)))
 
 (defun trim (start end &optional group)
   "Hides the first `start' and last `end' characters of the last
@@ -103,10 +111,10 @@
 
 ;; TODO: move all this to the defvar:
 (setq array-forth-font-lock-keywords
-      '((": \\w+\\>\\(.* ;\\)" (1 (process nil 2   'array-forth-green-face 1)))
+      '((": \\w+\\>\\(.* ;\\)" (1 (process nil nil 'array-forth-green-face 1)))
         (": \\w+\\>"           (0 (process 2   nil 'array-forth-red-face)))
         ("var \\w+\\>"         (0 (process 4   nil 'array-forth-magenta-face)))
-        ("( [^)]*)"            (0 (process 2   2   'array-forth-white-face)))
+        ("( [^)]*)"            (0 (process 2   1   'array-forth-white-face)))
         ("\\\\[^\n]*$"         (0 (process 2   nil 'array-forth-white-face)))
         ("\\[ .* \\]"          (0 (process 2   2   'array-forth-yellow-face)))
         ("\\$[0-9]+"           (0 (process 1   nil (modify-face-for-hex))))))
@@ -116,5 +124,7 @@
   "A major mode for editing arrayForth and colorForth files."
   :syntax-table array-forth-mode-syntax-table
   (set (make-local-variable 'font-lock-defaults) '(array-forth-font-lock-keywords)))
+
+(define-key array-forth-mode-map (kbd ";") 'array-forth-electric-semicolon)
 
 (provide 'array-forth-mode)
