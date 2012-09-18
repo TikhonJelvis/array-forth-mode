@@ -8,10 +8,12 @@ In the immediate future, I want to add support for making this transformation au
 
 ## Installation
 
+This requires Emacs 24. Using it on Emacs 23 fails miserably (with a segfault!), so don't do it. 
+
 For now, you can install this mode by putting it somewhere on your load path. After that, add the following line to your `.emacs` file:
 
     (require 'array-forth-mode)
     
-You can also set this as the default mode for editing `*.fs` files:
+You can also set this as the default mode for editing `*.cfs` files:
 
-    (add-to-list 'auto-mode-alist '("\\.fs" . array-forth--mode))
+    (add-to-list 'auto-mode-alist '("\\.cfs" . array-forth--mode))
