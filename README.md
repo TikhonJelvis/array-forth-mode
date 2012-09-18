@@ -16,4 +16,14 @@ For now, you can install this mode by putting it somewhere on your load path. Af
     
 You can also set this as the default mode for editing `*.cfs` files:
 
-    (add-to-list 'auto-mode-alist '("\\.cfs" . array-forth--mode))
+    (add-to-list 'auto-mode-alist '("\\.cfs" . array-forth-mode))
+    
+## Customization
+
+You can control the actual colors of the various grammatical constructs. Each face is named after the color it gets in the normal arrayForth editor: for example, the face for definitions is called `array-forth-red-face`. You can modify these directly in your code by adding a line like
+
+    (set-face-attribute 'array-forth-yellow-face nil :foreground "blue")
+
+This changes the `array-forth-yellow-face` to have a blue color everywhere. 
+
+You can also customize these faces with `M-x customize-group` followed by `array-forth-faces`. 
