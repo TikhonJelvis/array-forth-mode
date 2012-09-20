@@ -1,0 +1,12 @@
+: word a b c ;
+
+: word2 a b c ;
+
+: word3 abc var x ;
+
+: compile [ a b c ]
+
+\line comment
+
+( block comment)
+
