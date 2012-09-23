@@ -33,8 +33,16 @@
 ;;; Code:
 
 ;; TODO: Add customization options!
+(defgroup array-forth nil
+  "Customization options for `array-forth-mode'.")
+
 (defvar array-forth-mode-syntax-table (make-syntax-table)
   "Syntax table for `array-forth-mode'.")
+
+(defcustom array-forth-trim-markers t
+  "Controls whether punctuation is hidden in favor of color."
+  :group 'array-forth
+  :type 'boolean)
 
 (defface array-forth-red-face '((t (:foreground "red")))
   "The face corresponding to colorForth's red color which denotes
@@ -68,8 +76,9 @@
   "Hides the first `start' and last `end' characters of the last
   match. The optional argument `group' specifies which matched
   group to use. "
-  (when start (compose-region (match-beginning group) (+ (match-beginning group) start) ""))
-  (when end (compose-region (- (match-end group) end) (match-end group) "")))
+  (when array-forth-trim-markers
+    (when start (compose-region (match-beginning group) (+ (match-beginning group) start) ""))
+    (when end (compose-region (- (match-end group) end) (match-end group) ""))))
 
 (defun process (start end face &optional group)
   "Trims the current match with `trim' and sets the specified face."
@@ -102,9 +111,10 @@
 
 ;; TODO: move all this to the defvar:
 (setq array-forth-font-lock-keywords
-      '((": \\w+\\>\\(.*\\)"   (1 (process nil nil 'array-forth-green-face 1)))
-        (": \\w+\\>"           (0 (process 2   nil 'array-forth-red-face)))
-        ("var \\w+\\>"         (0 (process 4   nil 'array-forth-magenta-face)))
+      '((": [^ ]+\\>\\(.*\\)"  (1 (process nil nil 'array-forth-green-face 1)))
+        (": [^ ]+\\>"          (0 (process 2   nil 'array-forth-red-face)))
+        ("var [^ ]+\\>"        (0 (process 4   nil 'array-forth-magenta-face)))
+        ("| [^ ]+\\>"          (0 (process 2   nil 'array-forth-blue-face)))
         ("( [^)]*)"            (0 (process 2   1   'array-forth-white-face)))
         ("\\\\[^\n]*$"         (0 (process 1   nil 'array-forth-white-face)))
         ("\\[ .* \\]"          (0 (process 2   2   'array-forth-yellow-face)))
@@ -114,6 +124,7 @@
 (define-derived-mode array-forth-mode fundamental-mode "Array-Forth"
   "A major mode for editing arrayForth and colorForth files."
   :syntax-table array-forth-mode-syntax-table
+  :group 'array-forth
   (set (make-local-variable 'font-lock-defaults) '(array-forth-font-lock-keywords)))
 
 ;; (define-key array-forth-mode-map (kbd ";") 'array-forth-electric-semicolon)
