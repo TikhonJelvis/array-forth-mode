@@ -113,7 +113,7 @@
 (setq array-forth-font-lock-keywords
       '((": [^ ]+\\>\\([\0-\377[:nonascii:]]*\\)" (1 (process nil nil 'array-forth-green-face 1)))
         ("\\[ [^]:]*\\(:\\|$\\| \\]\\)"           (0 (process 2   2   'array-forth-yellow-face)))
-        ("; \\([^]:]*\\(:\\| \\]\\|$\\)\\)"       (1 (process 2   2   'array-forth-yellow-face 1)))
+        ("; \\([^]:]*\\(:\\| \\]\\|$\\)\\)"       (1 (process nil nil 'array-forth-yellow-face 1)))
         (": [^ ]+\\>"                             (0 (process 2   nil 'array-forth-red-face)))
         ("var [^ ]+\\>"                           (0 (process 4   nil 'array-forth-magenta-face)))
         ("| [^ \n]+\\>"                           (0 (process 2   nil 'array-forth-blue-face)))
