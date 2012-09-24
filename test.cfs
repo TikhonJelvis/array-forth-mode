@@ -10,3 +10,8 @@
 
 ( block comment)
 
+: word4 a b [ a b c ] ; e f g 
+
+: word5 a b c ;
+
+: hex $1 $2 $3 10 + + +;
