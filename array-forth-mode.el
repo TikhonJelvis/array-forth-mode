@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2012 Tikhon Jelvis
 ;; Author: Tikhon Jelvis <tikhon@berkeley.edu>
-;; Version: 0.0.1
+;; Version: 0.1.0
 ;; Keywords: forth, colorforth, arrayforth 
 
 ;; This file is not part of GNU Emacs.
@@ -47,27 +47,27 @@
 (defface array-forth-red-face '((t (:foreground "red")))
   "The face corresponding to colorForth's red color which denotes
   word definitions."
-  :group 'array-forth-faces)
+  :group 'array-forth)
 (defface array-forth-magenta-face '((t (:foreground "magenta")))
   "The face corresponding to colorForth's red color which denotes
   something or other."
-  :group 'array-forth-faces)
+  :group 'array-forth)
 (defface array-forth-green-face '((t (:foreground "green")))
   "The face corresponding to colorForth's green color which
   denotes normal code, or something."
-  :group 'array-forth-faces)
+  :group 'array-forth)
 (defface array-forth-yellow-face '((t (:foreground "yellow")))
   "The face corresponding to colorForth's white color which
   denotes something like compile-time code."
-  :group 'array-forth-faces)
+  :group 'array-forth)
 (defface array-forth-white-face '((t (:foreground "white")))
   "The face corresponding to colorForth's white color which
   denotes comments."
-  :group 'array-forth-faces)
+  :group 'array-forth)
 (defface array-forth-blue-face '((t (:foreground "#77AAFF")))
   "the face corresponding to colorForth's blue color which
   denotes words that only affect displaying code."
-  :group 'array-forth-faces)
+  :group 'array-forth)
 
 (defvar array-forth-font-lock-keywords '()
   "The syntax highlighting for arrayForth.")
@@ -119,6 +119,7 @@
         ("| [^ \n]+\\>"                           (0 (process 2   nil 'array-forth-blue-face)))
         ("( [^)]*)"                               (0 (process 2   1   'array-forth-white-face)))
         ("\\\\[^\n]*$"                            (0 (process 1   nil 'array-forth-white-face)))
+        ("{[^}]*}"                                (0 (process nil nil 'array-forth-white-face)))
         ("\\$[0-9]+"                              (0 (process 1   nil (modify-face-for-hex))))))
 
 ;;;###autoload
@@ -128,7 +129,5 @@
   :group 'array-forth
   (set (make-local-variable 'font-lock-defaults) '(array-forth-font-lock-keywords))
   (set (make-local-variable 'font-lock-multiline) t))
-
-;; (define-key array-forth-mode-map (kbd ";") 'array-forth-electric-semicolon)
 
 (provide 'array-forth-mode)

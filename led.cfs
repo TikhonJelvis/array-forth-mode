@@ -1,5 +1,5 @@
 {block 120}
-( - node) # 708 ( paths)
+- node) # 708 ( paths)
 : line ( ncd) swap push swap | indent
      begin dup , over + -next drop drop ;
 : count ( nc-ncd) dup [ 100 ] mod [ 0 ] + if | cr
