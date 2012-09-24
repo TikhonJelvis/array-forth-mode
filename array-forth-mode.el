@@ -111,21 +111,23 @@
 
 ;; TODO: move all this to the defvar:
 (setq array-forth-font-lock-keywords
-      '((": [^ ]+\\>\\(.*\\)"  (1 (process nil nil 'array-forth-green-face 1)))
-        (": [^ ]+\\>"          (0 (process 2   nil 'array-forth-red-face)))
-        ("var [^ ]+\\>"        (0 (process 4   nil 'array-forth-magenta-face)))
-        ("| [^ ]+\\>"          (0 (process 2   nil 'array-forth-blue-face)))
-        ("( [^)]*)"            (0 (process 2   1   'array-forth-white-face)))
-        ("\\\\[^\n]*$"         (0 (process 1   nil 'array-forth-white-face)))
-        ("\\[ .* \\]"          (0 (process 2   2   'array-forth-yellow-face)))
-        ("\\$[0-9]+"           (0 (process 1   nil (modify-face-for-hex))))))
+      '((": [^ ]+\\>\\([\0-\377[:nonascii:]]*\\)" (1 (process nil nil 'array-forth-green-face 1)))
+        ("\\[ [^]:]*\\(:\\|$\\| \\]\\)"           (0 (process 2   2   'array-forth-yellow-face)))
+        ("; \\([^]:]*\\(:\\| \\]\\|$\\)\\)"       (1 (process 2   2   'array-forth-yellow-face 1)))
+        (": [^ ]+\\>"                             (0 (process 2   nil 'array-forth-red-face)))
+        ("var [^ ]+\\>"                           (0 (process 4   nil 'array-forth-magenta-face)))
+        ("| [^ \n]+\\>"                           (0 (process 2   nil 'array-forth-blue-face)))
+        ("( [^)]*)"                               (0 (process 2   1   'array-forth-white-face)))
+        ("\\\\[^\n]*$"                            (0 (process 1   nil 'array-forth-white-face)))
+        ("\\$[0-9]+"                              (0 (process 1   nil (modify-face-for-hex))))))
 
 ;;;###autoload
 (define-derived-mode array-forth-mode fundamental-mode "Array-Forth"
   "A major mode for editing arrayForth and colorForth files."
   :syntax-table array-forth-mode-syntax-table
   :group 'array-forth
-  (set (make-local-variable 'font-lock-defaults) '(array-forth-font-lock-keywords)))
+  (set (make-local-variable 'font-lock-defaults) '(array-forth-font-lock-keywords))
+  (set (make-local-variable 'font-lock-multiline) t))
 
 ;; (define-key array-forth-mode-map (kbd ";") 'array-forth-electric-semicolon)
 
