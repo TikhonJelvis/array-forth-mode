@@ -113,14 +113,15 @@
 (setq array-forth-font-lock-keywords
       '((": [^ ]+\\>\\([\0-\377[:nonascii:]]*\\)" (1 (process nil nil 'array-forth-green-face 1)))
         ("\\[ [^]:]*\\(:\\|$\\| \\]\\)"           (0 (process 2   2   'array-forth-yellow-face)))
-        ("; \\([^]:]*\\(:\\| \\]\\|$\\)\\)"       (1 (process nil nil 'array-forth-yellow-face 1)))
+        ("; \\([^]:]*\\(:\\|$\\)\\)"              (1 (process nil nil 'array-forth-yellow-face 1)))
+        (";\\([^]:]* \\]\\)"                      (1 (process nil 2   'array-forth-yellow-face 1)))
         (": [^ ]+\\>"                             (0 (process 2   nil 'array-forth-red-face)))
         ("var [^ ]+\\>"                           (0 (process 4   nil 'array-forth-magenta-face)))
-        ("| [^ \n]+\\>"                           (0 (process 2   nil 'array-forth-blue-face)))
+        ("| [^ \n]+"                              (0 (process 2   nil 'array-forth-blue-face)))
         ("( [^)]*)"                               (0 (process 2   1   'array-forth-white-face)))
         ("\\\\[^\n]*$"                            (0 (process 1   nil 'array-forth-white-face)))
         ("{[^}]*}"                                (0 (process nil nil 'array-forth-white-face)))
-        ("\\$[0-9]+"                              (0 (process 1   nil (modify-face-for-hex))))))
+        ("\\$[0-9a-fA-F]+"                        (0 (process 1   nil (modify-face-for-hex))))))
 
 ;;;###autoload
 (define-derived-mode array-forth-mode fundamental-mode "Array-Forth"
