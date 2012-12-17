@@ -15,3 +15,9 @@
 : word5 a b c ;
 
 : hex $1 $2 $3 10 + + +;
+
+: word 1 2 3 ; d e f
+
+: word 1 2 3 ; ] not compiled [ compiled ]
+
+= $0

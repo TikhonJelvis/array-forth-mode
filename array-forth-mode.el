@@ -32,7 +32,6 @@
 
 ;;; Code:
 
-;; TODO: Add customization options!
 (defgroup array-forth nil
   "Customization options for `array-forth-mode'.")
 
@@ -67,6 +66,10 @@
 (defface array-forth-blue-face '((t (:foreground "#77AAFF")))
   "the face corresponding to colorForth's blue color which
   denotes words that only affect displaying code."
+  :group 'array-forth)
+(defface array-forth-gray-face '((t (:foreground "#AAAAAA")))
+  "the face corresponding to colorForth's gray color which
+  denotes memory locations."
   :group 'array-forth)
 
 (defvar array-forth-font-lock-keywords '()
@@ -121,7 +124,8 @@
         ("( [^)]*)"                                     (0 (process 2   1   'array-forth-white-face)))
         ("\\\\[^\n]*$"                                  (0 (process 1   nil 'array-forth-white-face)))
         ("{[^}]*}"                                      (0 (process nil nil 'array-forth-white-face)))
-        ("\\$[0-9a-fA-F]+\\>"                           (0 (process 1   nil (modify-face-for-hex))))))
+        ("\\$[0-9a-fA-F]+\\>"                           (0 (process 1   nil (modify-face-for-hex))))
+        ("= \\$[0-9a-fA-F]+\\>"                         (0 (process nil nil 'array-forth-gray-face)))))
 
 ;;;###autoload
 (define-derived-mode array-forth-mode fundamental-mode "Array-Forth"
